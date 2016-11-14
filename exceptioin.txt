@@ -1,0 +1,55 @@
+/****************************************************************************
+Name: BASIL ARACKAL                                         SEMESTER:S5 CSB
+ROLLNO:17
+*****************************EXCEPTION HANDLING******************************/
+
+SQL> CREATE TABLE PRODUCT(NO NUMBER,NAME VARCHAR(20),SPRICE NUMBER,CPRICE NUMBER);
+
+Table created.
+
+SQL> INSERT INTO PRODUCT VALUES(&NO,'&NAME',&SPRICE,&CPRICE);
+Enter value for no: 1
+Enter value for name: PENCIL
+Enter value for sprice: 10
+Enter value for cprice: 12
+old   1: INSERT INTO PRODUCT VALUES(&NO,'&NAME',&SPRICE,&CPRICE)
+new   1: INSERT INTO PRODUCT VALUES(1,'PENCIL',10,12)
+
+1 row created.
+
+SQL> /
+Enter value for no: 2
+Enter value for name: BOOK
+Enter value for sprice: 350
+Enter value for cprice: 250
+old   1: INSERT INTO PRODUCT VALUES(&NO,'&NAME',&SPRICE,&CPRICE)
+new   1: INSERT INTO PRODUCT VALUES(2,'BOOK',350,250)
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> DECLARE
+  2   EXP EXCEPTION;
+  3   NAME VARCHAR(20);
+  4   CURSOR C IS SELECT * FROM PRODUCT;
+  5  BEGIN
+  6   FOR I IN C
+  7   LOOP
+  8    IF I.SPRICE>I.CPRICE THEN
+  9     NAME:=I.NAME;
+ 10     RAISE EXP;
+ 11    END IF;
+ 12   END LOOP;
+ 13  EXCEPTION
+ 14   WHEN EXP THEN
+ 15    DBMS_OUTPUT.PUT_LINE('SELLING PRICE OF '||NAME||' IS GREATER THAN ITS COST PRICE');
+ 16  END;
+ 17  /
+SELLING PRICE OF BOOK IS GREATER THAN ITS COST PRICE
+
+PL/SQL procedure successfully completed.
+
+SQL>

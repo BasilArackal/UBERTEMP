@@ -1,0 +1,44 @@
+/****************************************************************************
+Name: BASIL ARACKAL                                         SEMESTER:S5 CSB
+ROLLNO:17
+*************************RANK CALCULATION*************************/
+SQL> select * from student;
+
+   ROLL_NO NAME                  TOT_MARKS TRADE        RANK
+---------- -------------------- ---------- ------ ----------
+         1 Livin                       580 CS
+         2 Basil                     400 CS
+         3 Britto                       300 CS
+	   4 Jestina		       600 CS
+
+SQL> eed
+SP2-0042: unknown command "eed" - rest of line ignored.
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2     i number;
+  3     cursor crs is select roll_no,tot_marks from student order by tot_marks desc;
+  4  BEGIN
+  5     i:=1;
+  6     for row in crs loop
+  7             update student set rank = i where roll_no = row.roll_no;
+  8             i:=i+1;
+  9     exit when SQL%NOTFOUND;
+ 10     END LOOP;
+ 11* END;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+
+  1* select * from student where rank<=3 order by rank asc
+SQL> /
+
+   ROLL_NO NAME                  TOT_MARKS TRADE        RANK
+---------- -------------------- ---------- ------ ----------
+         4 Jestina                     600 CS              1
+         1 Livin                       580 CS              2
+         2 Basil                     400 CS              3
+
+

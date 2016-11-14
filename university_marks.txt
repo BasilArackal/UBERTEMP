@@ -1,0 +1,102 @@
+/****************************************************************************
+Name: BASIL ARACKAL                                         SEMESTER:S5 CSB
+ROLLNO:17
+*************************UNIVERSITY MARK CALCULATION*************************/
+
+SQL> select * from studs;
+
+      ROLL    UNI_MAR       SESS
+---------- ---------- ----------
+         1         50         23
+        23          1         45
+        78         45         12
+        12         45         78
+        74         10         23
+        45         56         89
+        14         12         78
+
+7 rows selected.
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2     CURSOR cur is Select * from studs;
+  3     tots number;
+  4  BEGIN
+  5     for row in cur loop
+  6             if (row.sess >= 30 and row.sess <= 34) then
+  7                     update studs set sess = sess + (35 - sess) where roll = row.roll;
+  8             end if;
+  9             tots := row.sess + row.uni_mar;
+ 10             if tots > 75 then
+ 11                     insert into studs2 values (row.roll,row.uni_mar,row.sess);
+ 12             end if;
+ 13     exit when sql%notfound;
+ 14     end loop;
+ 15* end;
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from studs2;
+
+      ROLL    UNI_MAR       SESS
+---------- ---------- ----------
+        12         45         78
+        45         56         89
+        14         12         78
+
+
+SQL> select * from studs;
+
+      ROLL    UNI_MAR       SESS
+---------- ---------- ----------
+         1         50         23
+        23          1         45
+        78         45         12
+        12         45         78
+        74         10         23
+        45         56         89
+        14         12         78
+
+7 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  declare
+  2     cursor cur(rno number) is select * from studs2 where roll=rno;
+  3     rollno number;
+  4  begin
+  5     rollno:=&rno;
+  6     for row in cur(rollno) loop
+  7             dbms_output.put_line('Passed');
+  8     exit when sql%notfound;
+  9     end loop;
+ 10* end;
+SQL> /
+Enter value for rno: 12
+old   5:        rollno:=&rno;
+new   5:        rollno:=12;
+Passed
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for rno: 14
+old   5:        rollno:=&rno;
+new   5:        rollno:=14;
+Passed
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for rno: 74
+old   5:        rollno:=&rno;
+new   5:        rollno:=74;
+
+PL/SQL procedure successfully completed.
+
+SQL>

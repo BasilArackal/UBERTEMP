@@ -1,0 +1,55 @@
+/****************************************************************************
+Name: BASIL ARACKAL                                         SEMESTER:S5 CSB
+ROLLNO:17
+***************************  LARGEST AND SMALLEST *************************/
+SQL> CREATE OR REPLACE PROCEDURE find_largest_and_smallest(a number,b number,c number) AS
+  2   l number;
+  3   s number;
+  4   BEGIN
+  5    IF a<b THEN
+  6                     IF a<c THEN
+  7                        s:= a;
+  8                        IF b>c THEN
+  9                                l:=b;
+ 10                        ELSE
+ 11                                l:=c;
+ 12                        END IF;
+ 13                ELSE
+ 14                        s:=c;
+ 15                        IF a>b THEN
+ 16                                l:=a;
+ 17                        ELSE
+ 18                                l:=b;
+ 19                        END IF;
+ 20                END IF;
+ 21        ELSE
+ 22                IF b<c THEN
+ 23                        s:= b;
+ 24                        IF a>c THEN
+ 25                                l:=a;
+ 26                        ELSE
+ 27                                l:=c;
+ 28                        END IF;
+ 29                ELSE
+ 30                        s:=c;
+ 31                        IF a>b THEN
+ 32                                l:=a;
+ 33                        ELSE
+ 34                                l:=b;
+ 35                        END IF;
+ 36                END IF;
+ 37        END IF;
+ 38     dbms_output.put_line('Largest='||l||' and Smallest='||s);
+ 39   END;
+ 40  /
+
+Procedure created.
+
+SQL> call find_largest_and_smallest
+  2  (5,2,3)
+  3  ;
+Largest=5 and Smallest=2
+
+Call completed.
+
+SQL>

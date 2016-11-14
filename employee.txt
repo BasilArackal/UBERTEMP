@@ -1,0 +1,58 @@
+/****************************************************************************
+Name: BASIL ARACKAL                                         SEMESTER:S5 CSB
+ROLLNO:17
+******************************DISPLAY SALARY********************************/
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* CREATE TABLE EMP(id integer PRIMARY KEY, ename varchar(25), salary number(6), job varchar(25))
+SQL> /
+
+Table created.
+
+
+SQL> select * from emp;
+
+        ID ENAME                         SALARY JOB
+---------- ------------------------- ---------- -------------------------
+         1 Livin                          60000 Android Developer
+         2 Lakshmi                        80000 DOT NET Developer
+         3 Soolu                          75000 Django Developer
+         4 Britto                        100000 Framework Specialist
+         5 Basil                         120000 Devops Manager
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE FUNCTION getEmp(i IN integer) RETURN integer AS sal number;
+  2  BEGIN
+  3     SELECT salary into sal from emp where ID = i;
+  4     return sal;
+  5* END;
+SQL> /
+
+Function created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2     eid integer;
+  3     sal number;
+  4  BEGIN
+  5     eid:=&id;
+  6     sal := getEmp(eid);
+  7     dbms_output.put_line('Salary is ' || sal);
+  8* END;
+SQL> /
+Enter value for id: 1
+old   5:        eid:=&id;
+new   5:        eid:=1;
+Salary is 60000
+
+PL/SQL procedure successfully completed.
+
+

@@ -1,0 +1,90 @@
+/****************************************************************************
+Name: BASIL ARACKAL                                         SEMESTER:S5 CSB
+ROLLNO:17
+****************************** TRIGGER 1  ***********************************/
+SQL> ed
+Wrote file afiedt.buf
+
+  1* Create table account (ACC_NO NUMBER, Balance Number, Br_Name Varchar(20))
+SQL> /
+
+Table created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* Create table loan (LOAN_NO NUMBER, Amount Number, Br_Name Varchar(20))
+SQL> /
+
+Table created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* Create table borrower (C_Name Varchar(20), LOAN_NUMBER Number)
+SQL> /
+
+Table created.
+
+SQL> Insert into account values(&num,&bal,'&branch');
+Enter value for num: 123456
+Enter value for bal: 4500
+Enter value for branch: Kalady
+old   1: Insert into account values(&num,&bal,'&branch')
+new   1: Insert into account values(123456,4500,'Kalady')
+
+1 row created.
+
+SQL> /
+Enter value for num: 456789
+Enter value for bal: 5000
+Enter value for branch: Vazhakulam
+old   1: Insert into account values(&num,&bal,'&branch')
+new   1: Insert into account values(456789,5000,'Vazhakulam')
+
+1 row created.
+
+SQL> /
+Enter value for num: 741085
+Enter value for bal: 3500
+Enter value for branch: Muvattupuzha
+old   1: Insert into account values(&num,&bal,'&branch')
+new   1: Insert into account values(741085,3500,'Muvattupuzha')
+
+1 row created.
+
+SQL> select * from account;
+
+    ACC_NO    BALANCE BR_NAME
+---------- ---------- --------------------
+    123456       4500 Kalady
+    456789       5000 Vazhakulam
+    741085       3500 Muvattupuzha
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE TRIGGER TRIG
+  2  BEFORE UPDATE ON ACCOUNT FOR EACH ROW
+  3  WHEN (NEW.BALANCE < 0)
+  4  BEGIN
+  5   INSERT INTO LOAN VALUES(:NEW.ACC_NO,:NEW.BALANCE,:NEW.BR_NAME);
+  6* END;
+SQL> /
+
+Trigger created.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* UPDATE ACCOUNT SET BALANCE = -50 WHERE ACC_NO=123456
+SQL> /
+
+1 row updated.
+
+
+SQL> select * from loan;
+
+   LOAN_NO     AMOUNT BR_NAME
+---------- ---------- --------------------
+    123456        50 Kalady
